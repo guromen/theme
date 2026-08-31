@@ -106,6 +106,14 @@ code {
     <button class="topic-button" data-topic="3">
         Обработка событий
     </button>
+
+    <button class="topic-button" data-topic="4">
+        Fetch
+    </button>
+
+      <button class="topic-button" data-topic="5">
+        Form
+    </button>
 </div>
 
 <div id="text1" class="content hidden">
@@ -302,11 +310,228 @@ display — это основа того,  как элемент ведёт се
 - `display: flex` + `position: relative` для контейнера
 - `position: absolute` для вложенных элементов (например, всплывающих окон, подсказок)
 - `position: fixed` для меню, футеров, кнопок
+
+    В HTML-разметке все элементы меню являются не кнопками, а ссылками, то есть тегами a. В этом подходе есть некоторые преимущества, например:
+
+- «правый клик – открыть в новом окне». Если мы будем использовать button или span, то данное сочетание работать не будет.
+- Поисковые движки переходят по ссылкам a href="..." при индексации.
 </div>
 
 <div id="text3" class="content hidden">
+    <strong>3 способа назначения обработчиков событий:</strong>
 
+1. Атрибут HTML: onclick="..." (не регистрозависимо)
+2. DOM-свойство: elem.onclick = function (регистрозависимо)
+3. Самый гибкий способ. Специальные методы: elem.addEventListener(event, handler[, phase]) для добавления, removeEventListener для удаления.
+    Удаление требует  точно ту же функцию, поэтому ее выносят в отдельный handler
+
+    <strong> Объект события</strong>
+    Когда происходит событие, браузер создаёт объект события, записывает в него детали и передаёт его в качестве аргумента функции-обработчику.
+elem.onclick = function(event) {
+	alert(elem.type + elem.currentTarget)
+	alert('Координаты :' + elem.clientX + elem.clientY)
+}
+🟢 `target` — **Самый глубокий элемент, который вызывает событие, называется целевым элементом, и он доступен через event.target
+🔵 `currentTarget` — **на каком элементе висит выполняющийся обработчик**
+🟠 `this` — **контекст функции**, который в обычном обработчике события обычно совпадает с `currentTarget`, но может отличаться.
+
+Также addEventListener поддерживает объекты в качестве обработчиков событий. В этом случае вызывается метод объекта handleEvent.
+
+    <strong> Всплытие и погружение</strong>
+ Всплытие - ловит клики по своим дочерним элементам.
+
+При наступлении события – самый глубоко вложенный элемент, на котором оно произошло, помечается как «целевой» (`event.target`).
+
+- Затем событие сначала двигается вниз от корня документа к event.target, по пути вызывая обработчики, поставленные через
+    `addEventListener(...., true)`, где `true` – это сокращение для `{capture: true}`.
+- Далее обработчики вызываются на целевом элементе.
+- Далее событие двигается от `event.target` вверх к корню документа, по пути вызывая обработчики, поставленные через `on'event'` и    `addEventListener` без третьего аргумента или с третьим аргументом равным `false`.
+
+Каждый обработчик имеет доступ к свойствам события `event`:
+
+- `event.target` – самый глубокий элемент, на котором произошло событие.
+- `event.currentTarget` (=`this`) – элемент, на котором в данный момент сработал обработчик (тот, на котором «висит» конкретный обработчик)
+- `event.eventPhase`– на какой фазе он сработал (погружение=1, фаза цели=2, всплытие=3).
+
+Любой обработчик может остановить событие вызовом `event.stopPropagation()`, но делать это не рекомендуется, так как в дальнейшем это
+    событие может понадобиться, иногда для самых неожиданных вещей.
+
+В современной разработке стадия погружения используется очень редко
+    Обработчики, добавленные через on'event'-свойство или через HTML-атрибуты, или через addEventListener(event, handler) с двумя аргументами,
+    ничего не знают о фазе погружения, а работают только на 2-ой и 3-ей фазах.
+
+    <strong>Фокусировка blur/focus</strong>
+    Текущий элемент с фокусом можно получить из `document.activeElement`.
+События `focus` и `blur` срабатывают на фокусировке/потере фокуса элемента.
+
+Их особенности:
+- Они не всплывают. Но можно использовать фазу перехвата или `focusin/focusout`.
+- Большинство элементов не поддерживают фокусировку по умолчанию. Используйте tabindex = -1, 0, 1, ... , чтобы сделать фокусируемым любой элемент.
+
+    <strong>Отмена действия браузера</strong>
+1. event.preventDefault() - основной способ
+2. Если же обработчик назначен через on'событие' (не через addEventListener), то также можно вернуть false из обработчика.
+
+    <strong>Конструктор Event</strong>
+Встроенные классы для событий формируют иерархию аналогично классам для DOM-элементов. Её корнем является встроенный класс Event.
+
+let event = new Event(type[, options]);
+Где:
+type – тип события, строка, например "click" или же любой придуманный нами – "my-event".
+options – объект с тремя необязательными свойствами:
+bubbles: true/false – если true, тогда событие всплывает.
+cancelable: true/false – если true, тогда можно отменить действие по умолчанию.
+composed: true/false – если true, тогда событие будет всплывать наружу за пределы Shadow DOM. Позже мы разберём это в разделе Веб-компоненты.
+
+    <strong>  Метод dispatchEvent</strong>
+После того, как объект события создан, мы должны запустить его на элементе, вызвав метод elem.dispatchEvent(event).
+
+Затем обработчики отреагируют на него, как будто это обычное браузерное событие. Если при создании указан флаг bubbles, то оно будет всплывать.
+    <b>event.isTrusted</b> - true для событий c реальными действиями пользователя, и false для генерируемых кодом.
+
+    <strong>Событие: submit</strong>
+Есть два основных способа отправить форму:
+
+1. Первый – нажать кнопку input type="submit" или  input type="image"
+2. Второй – нажать Enter, находясь на каком-нибудь поле.
+
+Оба действия сгенерируют событие `submit` на форме. Обработчик может проверить данные, и если есть ошибки, показать их и вызвать `event.preventDefault()`, тогда форма не будет отправлена на сервер.
 </div>
+
+    <div id="text4" class="content hidden">
+        <strong> Fetch   </strong>
+Типичный запрос с помощью `fetch` состоит из двух операторов `await`:
+let response = await fetch(url, options); // завершается с заголовками ответа
+let result = await response.json(); // читать тело ответа в формате JSON
+
+Или, без `await`:
+        fetch(url, options)
+  .then(response => response.json())
+  .then(result => /* обрабатываем результат */)
+
+
+Параметры ответа:
+- `response.status` – HTTP-код ответа,
+- `response.ok` – `true`, если статус ответа в диапазоне 200-299.
+- `response.headers` – похожий на `Map` объект с HTTP-заголовками.
+
+Методы для получения тела ответа:
+- `response.text()`** – возвращает ответ как обычный текст,
+- `response.json()`** – декодирует ответ в формате JSON,
+- `response.formData()`** – возвращает ответ как объект FormData (кодировка form/multipart, см. следующую главу),
+- `response.blob()`** – возвращает объект как [Blob](https://learn.javascript.ru/blob) (бинарные данные с типом),
+- `response.arrayBuffer()`** – возвращает ответ как [ArrayBuffer](https://learn.javascript.ru/arraybuffer-binary-arrays) (низкоуровневые бинарные данные),
+
+Опции `fetch`, которые мы изучили на данный момент:
+
+- `method` – HTTP-метод,
+- `headers` – объект с запрашиваемыми заголовками (не все заголовки разрешены),
+- `body` – данные для отправки (тело запроса) в виде текста, `FormData`, `BufferSource`, `Blob` или `UrlSearchParams`.
+ </div>
+
+    <div id="text5" class="content ">
+        <strong>Формы</strong>
+        Самое главное — как вообще работает &lt;form&gt;
+
+Ты должен уверенно объяснить такой код:
+<pre><code>&lt;form action="/login" method="post"&gt;
+    &lt;input type="text" name="username"&gt;
+    &lt;input type="password" name="password"&gt;
+    &lt;button type="submit"&gt;Войти&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+И ответить: Что произойдёт при нажатии кнопки?
+Цепочка:
+пользователь вводит данные
+        ↓
+нажимает submit
+        ↓
+браузер собирает данные form
+        ↓
+берёт name каждого поля (name — имя параметра, под которым значение отправляется серверу!) а id не означает, что значение будет отправлено серверу.
+        ↓
+создаёт HTTP-запрос
+        ↓
+отправляет его на action(action не указан-форма отправляется на текущий URL)
+
+
+<b>GET</b>-поиск- фильтрации- сортировки- получения данных. /search?q=python
+<b>POST</b>-- создаём что-то- изменяем- отправляем данные- авторизуемся. Данные находятся в body username=Roman&password=12345
+
+        <strong> 3 варианта submit</strong>
+button type="submit" Отправить /button
+button type="button" Кнопка /button
+button type="reset" Очистить /button>
+
+        <strong> label.for -> input.id</strong>
+label for="email" Email: /label
+input id="email" type="email" name="email"
+
+<strong>основные типы input</strong>
+text password email number checkbox radio(с одинаковым name) file hidden date submit
+
+        <pre><code>&lt;input disabled&gt;</code></pre>
+- нельзя изменить;
+- его значение не отправляется при submit**.
+
+        <pre><code>&lt;input readonly value="Roman"&gt;</code></pre>
+- нельзя изменить пользователю;
+- но его значение **может отправляться вместе с формой**.
+
+        <strong>select</strong>
+Обязательно знать:
+<pre><code>
+&lt;select name="city"&gt;
+    &lt;option value="amsterdam"&gt;Amsterdam&lt;/option&gt;
+    &lt;option value="paris"&gt;Paris&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+При отправке отправится если выбран Amsterdam:<em> city=amsterdam</em>
+
+
+<strong> `FormData` — очень важно для JavaScript</strong>
+const formData = new FormData(form) //Теперь `formData` содержит данные формы.
+
+Методы:
+- `formData.append(name, value)` – добавляет к объекту поле с именем `name` и значением `value`,
+- `formData.append(name, blob, fileName)` – добавляет поле, как будто в форме имеется элемент ` input type="file", третий аргумент `fileName` устанавливает имя файла (не имя поля формы), как будто это имя из файловой системы пользователя,
+- `formData.delete(name)` – удаляет поле с заданным именем `name`,
+- `formData.get(name)` – получает значение поля с именем `name`,
+- `formData.has(name)` – если существует поле с именем `name`, то возвращает `true`, иначе `false`
+
+если:
+input name="username"
+можно получить  form.elements.username
+
+        <strong> `enctype` — обязательно знать хотя бы одну вещь</strong>
+        <pre><code>
+            &lt;form method="post" enctype="multipart/form-data"&gt;
+            &lt;/form&gt;
+        </code></pre>
+multipart/form-data нужен для передачи файлов через обычную HTML-форму.
+Потому что файл нельзя корректно передать как обычный набор URL-encoded параметров; multipart разбивает тело запроса на части, в том числе для бинарных данных.
+
+  <pre><code>
+&lt;form id="formElem"&gt;
+&lt;input type="text" name="firstName" value="John"&gt;
+Картинка: &lt;input type="file" name="picture" accept="image/*"&gt;
+&lt;input type="submit"&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+formElem.onsubmit = async (e) =&gt; {
+e.preventDefault();//отменяет стандартное поведение браузера(отправку формы, перезагрузку страницы)
+let response = await fetch('/article/formdata/post/user-avatar', {
+method: 'POST',
+body: new FormData(formElem)
+});
+let result = await response.json();
+alert(result.message);
+};
+&lt;/script&gt;
+  </code></pre>
+
+    </div>
 
 </div>
 
