@@ -28,15 +28,14 @@
 
     h1 {
         text-align: center;
-<!--        margin-bottom: 30px;-->
     }
 
-    .buttons {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin-bottom: 30px;
-    }
+ .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+}
 
     .topic-button {
         padding: 14px 25px;
@@ -59,8 +58,8 @@
 
     .content {
         background: white;
-        padding: 30px;
-<!--        border-radius: 10px;-->
+        width:130%;
+        padding: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         line-height: 1.7;
         white-space: pre-line;
