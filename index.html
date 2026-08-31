@@ -114,6 +114,52 @@ code {
       <button class="topic-button" data-topic="5">
         Form
     </button>
+
+    <button class="topic-button" data-topic="6">
+        Задача 1
+    </button>
+    <button class="topic-button" data-topic="7">
+        Задача 2
+    </button>
+    <button class="topic-button" data-topic="8">
+        Задача 3
+    </button>
+    <button class="topic-button" data-topic="9">
+        Задача 4
+    </button>
+    <button class="topic-button" data-topic="10">
+        Задача 5
+    </button>
+    <button class="topic-button" data-topic="11">
+        Задача 6
+    </button>
+    <button class="topic-button" data-topic="12">
+        Задача 7
+    </button>
+    <button class="topic-button" data-topic="13">
+        Задача 8
+    </button>
+    <button class="topic-button" data-topic="14">
+        Задача 9
+    </button>
+    <button class="topic-button" data-topic="15">
+        Задача 10
+    </button>
+    <button class="topic-button" data-topic="16">
+        Задача 11
+    </button>
+    <button class="topic-button" data-topic="17">
+        Задача 12
+    </button>
+    <button class="topic-button" data-topic="18">
+        Задача 13
+    </button>
+    <button class="topic-button" data-topic="19">
+        Задача 14
+    </button>
+    <button class="topic-button" data-topic="20">
+        Задача 15
+    </button>
 </div>
 
 <div id="text1" class="content hidden">
@@ -430,107 +476,983 @@ let result = await response.json(); // читать тело ответа в ф�
  </div>
 
     <div id="text5" class="content ">
-        <strong>Формы</strong>
-        Самое главное — как вообще работает &lt;form&gt;
+                    <strong>Формы</strong>
+                    Самое главное — как вообще работает &lt;form&gt;
 
-Ты должен уверенно объяснить такой код:
-<pre><code>&lt;form action="/login" method="post"&gt;
-    &lt;input type="text" name="username"&gt;
-    &lt;input type="password" name="password"&gt;
-    &lt;button type="submit"&gt;Войти&lt;/button&gt;
-&lt;/form&gt;
-</code></pre>
-И ответить: Что произойдёт при нажатии кнопки?
-Цепочка:
-пользователь вводит данные
-        ↓
-нажимает submit
-        ↓
-браузер собирает данные form
-        ↓
-берёт name каждого поля (name — имя параметра, под которым значение отправляется серверу!) а id не означает, что значение будет отправлено серверу.
-        ↓
-создаёт HTTP-запрос
-        ↓
-отправляет его на action(action не указан-форма отправляется на текущий URL)
-
-
-<b>GET</b>-поиск- фильтрации- сортировки- получения данных. /search?q=python
-<b>POST</b>-- создаём что-то- изменяем- отправляем данные- авторизуемся. Данные находятся в body username=Roman&password=12345
-
-        <strong> 3 варианта submit</strong>
-button type="submit" Отправить /button
-button type="button" Кнопка /button
-button type="reset" Очистить /button>
-
-        <strong> label.for -> input.id</strong>
-label for="email" Email: /label
-input id="email" type="email" name="email"
-
-<strong>основные типы input</strong>
-text password email number checkbox radio(с одинаковым name) file hidden date submit
-
-        <pre><code>&lt;input disabled&gt;</code></pre>
-- нельзя изменить;
-- его значение не отправляется при submit**.
-
-        <pre><code>&lt;input readonly value="Roman"&gt;</code></pre>
-- нельзя изменить пользователю;
-- но его значение **может отправляться вместе с формой**.
-
-        <strong>select</strong>
-Обязательно знать:
-<pre><code>
-&lt;select name="city"&gt;
-    &lt;option value="amsterdam"&gt;Amsterdam&lt;/option&gt;
-    &lt;option value="paris"&gt;Paris&lt;/option&gt;
-&lt;/select&gt;
-</code></pre>
-При отправке отправится если выбран Amsterdam:<em> city=amsterdam</em>
-
-
-<strong> `FormData` — очень важно для JavaScript</strong>
-const formData = new FormData(form) //Теперь `formData` содержит данные формы.
-
-Методы:
-- `formData.append(name, value)` – добавляет к объекту поле с именем `name` и значением `value`,
-- `formData.append(name, blob, fileName)` – добавляет поле, как будто в форме имеется элемент ` input type="file", третий аргумент `fileName` устанавливает имя файла (не имя поля формы), как будто это имя из файловой системы пользователя,
-- `formData.delete(name)` – удаляет поле с заданным именем `name`,
-- `formData.get(name)` – получает значение поля с именем `name`,
-- `formData.has(name)` – если существует поле с именем `name`, то возвращает `true`, иначе `false`
-
-если:
-input name="username"
-можно получить  form.elements.username
-
-        <strong> `enctype` — обязательно знать хотя бы одну вещь</strong>
-        <pre><code>
-            &lt;form method="post" enctype="multipart/form-data"&gt;
+            Ты должен уверенно объяснить такой код:
+            <pre><code>&lt;form action="/login" method="post"&gt;
+                &lt;input type="text" name="username"&gt;
+                &lt;input type="password" name="password"&gt;
+                &lt;button type="submit"&gt;Войти&lt;/button&gt;
             &lt;/form&gt;
+            </code></pre>
+            И ответить: Что произойдёт при нажатии кнопки?
+            Цепочка:
+            пользователь вводит данные
+                    ↓
+            нажимает submit
+                    ↓
+            браузер собирает данные form
+                    ↓
+            берёт name каждого поля (name — имя параметра, под которым значение отправляется серверу!) а id не означает, что значение будет отправлено серверу.
+                    ↓
+            создаёт HTTP-запрос
+                    ↓
+            отправляет его на action(action не указан-форма отправляется на текущий URL)
+
+
+            <b>GET</b>-поиск- фильтрации- сортировки- получения данных. /search?q=python
+            <b>POST</b>-- создаём что-то- изменяем- отправляем данные- авторизуемся. Данные находятся в body username=Roman&password=12345
+
+                    <strong> 3 варианта submit</strong>
+            button type="submit" Отправить /button
+            button type="button" Кнопка /button
+            button type="reset" Очистить /button>
+
+                    <strong> label.for -> input.id</strong>
+            label for="email" Email: /label
+            input id="email" type="email" name="email"
+
+            <strong>основные типы input</strong>
+            text password email number checkbox radio(с одинаковым name) file hidden date submit
+
+                    <pre><code>&lt;input disabled&gt;</code></pre>
+            - нельзя изменить;
+            - его значение не отправляется при submit**.
+
+                    <pre><code>&lt;input readonly value="Roman"&gt;</code></pre>
+            - нельзя изменить пользователю;
+            - но его значение **может отправляться вместе с формой**.
+
+                    <strong>select</strong>
+            Обязательно знать:
+            <pre><code>
+            &lt;select name="city"&gt;
+                &lt;option value="amsterdam"&gt;Amsterdam&lt;/option&gt;
+                &lt;option value="paris"&gt;Paris&lt;/option&gt;
+            &lt;/select&gt;
+            </code></pre>
+            При отправке отправится если выбран Amsterdam:<em> city=amsterdam</em>
+
+
+            <strong> `FormData` — очень важно для JavaScript</strong>
+            const formData = new FormData(form) //Теперь `formData` содержит данные формы.
+
+            Методы:
+            - `formData.append(name, value)` – добавляет к объекту поле с именем `name` и значением `value`,
+            - `formData.append(name, blob, fileName)` – добавляет поле, как будто в форме имеется элемент ` input type="file", третий аргумент `fileName` устанавливает имя файла (не имя поля формы), как будто это имя из файловой системы пользователя,
+            - `formData.delete(name)` – удаляет поле с заданным именем `name`,
+            - `formData.get(name)` – получает значение поля с именем `name`,
+            - `formData.has(name)` – если существует поле с именем `name`, то возвращает `true`, иначе `false`
+
+            если:
+            input name="username"
+            можно получить  form.elements.username
+
+                    <strong> `enctype` — обязательно знать хотя бы одну вещь</strong>
+                    <pre><code>
+                        &lt;form method="post" enctype="multipart/form-data"&gt;
+                        &lt;/form&gt;
+                    </code></pre>
+            multipart/form-data нужен для передачи файлов через обычную HTML-форму.
+            Потому что файл нельзя корректно передать как обычный набор URL-encoded параметров; multipart разбивает тело запроса на части, в том числе для бинарных данных.
+
+              <pre><code>
+            &lt;form id="formElem"&gt;
+            &lt;input type="text" name="firstName" value="John"&gt;
+            Картинка: &lt;input type="file" name="picture" accept="image/*"&gt;
+            &lt;input type="submit"&gt;
+            &lt;/form&gt;
+
+            &lt;script&gt;
+            formElem.onsubmit = async (e) =&gt; {
+            e.preventDefault();//отменяет стандартное поведение браузера(отправку формы, перезагрузку страницы)
+            let response = await fetch('/article/formdata/post/user-avatar', {
+            method: 'POST',
+            body: new FormData(formElem)
+            });
+            let result = await response.json();
+            alert(result.message);
+            };
+            &lt;/script&gt;
+              </code></pre>
+    </div>
+    <div id="text6" class="content hidden">
+        # Разработайте метод is_palindrome(string), который будет определять, является ли
+# параметр string палиндромом (строкой, которая читается одинаково как сначала
+# так и с конца), при условии игнорирования пробелов, знаков препинания и
+# регистра.
+# Тесты для примеров и проверки:
+# is_palindrome("A man, a plan, a canal -- Panama") # => True
+# is_palindrome("Madam, I'm Adam!") # => True
+# is_palindrome(333) # => True
+# is_palindrome(None) # => False
+# is_palindrome("Abracadabra") # => False
+
+<pre><code>
+    class Palindrome:
+    """ Класс с методом is_palindrome. Метод проверяет, является ли строка палиндромом.
+        Принимает на вход число или строку.
+        Делаем копию входной строки, игнорируем регистр и удаляем знаки препинания и пробелы
+        (Конечно можно было бы быстрее и проще это реализовать через регулярные выражения)
+        В цикле проверяются с двух стронон равенстрво символов, иначе сразу же строка- не палиндром
+    """
+
+    def is_palindrome(self, phrase:int|str=''):
+        if phrase:
+            s = ''.join(str(phrase).lower().split())
+            s = s.replace('!', '')
+            s = s.replace('-', '')
+            s = s.replace(',', '')
+            s = s.replace('.', '')
+            s = s.replace('?', '')
+            s = s.replace('\'', '')
+            s = s.replace('(', '')
+            s = s.replace(')', '')
+
+
+            i = 0
+            res = None
+            while i < len(s) // 2:
+
+                if s[i] == s[len(s) - i - 1]:
+                    i += 1
+                    res = True
+                else:
+                    res = False
+                    break
+
+            return True if res else False
+        return False
+
+p1=Palindrome()
+assert p1.is_palindrome() == False, 'Добдно быть False'
+assert p1.is_palindrome("A man, a plan, a canal -- Panama") == True, 'Добдно быть True'
+assert p1.is_palindrome("Madam, I'm Adam!") == True, 'Добдно быть True'
+assert p1.is_palindrome(333) == True, 'Добдно быть True'
+assert p1.is_palindrome(None) == False, 'Добдно быть False'
+assert p1.is_palindrome("Abracadabra") == False, 'Добдно быть False'
+
+def is_palindrome(phrase):
+    return Palindrome().is_palindrome(phrase)
+</code></pre>
+    </div>
+
+    <div id="text7" class="content hidden">
+        # Дан список list и числовой диапазон range. Разработайте метод coincidence(list,
+# range) для определения элементов из массива list, значения которого входят в
+# указанный диапазон range. Если не передан хотя бы один из параметров, то
+# должен вернуться пустой массив.
+# Тесты для примеров и проверки:
+# coincidence([1, 2, 3, 4, 5], range(3, 6)) # => [3, 4, 5]
+# coincidence() # => []
+# coincidence([None, 1, 'foo', 4, 2, 2.5], range(1, 4)) # => [1, 2, 2.5]
+<pre><code>
+def coincidence(l:list=[], r:range=range(0)):
+    """Метод проверяет на основе List Comprehention, является ли
+    каждый элемент списка числом, и если да, то округляет его
+    и проверяет на вхождение в заданный диапазон. Если не передан
+    хотя бы один из параметров - возвращается пустой список.
+    """
+    res = [i for i in l if (isinstance(i, int | float) and (int(i) in r))]
+    return res
+
+
+assert coincidence([1, 2, 3, 4, 5], range(3, 6)) == [3, 4, 5]
+assert coincidence() == []
+assert coincidence([None, 1, 'foo', 4, 2, 2.5], range(1, 4)) == [1, 2, 2.5]
+assert coincidence([1,2,3,4]) == []
+</code></pre>
+    </div>
+    <div id="text8" class="content hidden">
+        # Дан список элементов произвольной природы. Необходимо разработать метод
+# max_odd(array), который определит максимальный нечетный элемент (21.000 = 21 и
+# тоже считается нечетным элементом). Вернуть None, если таких элементов нет в
+# переданном массиве.
+# Тесты для примеров и проверки:
+# max_odd([1, 2, 3, 4, 4]) # => 3
+# max_odd([21.0, 2, 3, 4, 4]) # => 21
+# max_odd(['ololo', 2, 3, 4, [1, 2], None]) # => 3
+# max_odd(['ololo', 'fufufu']) # => None
+# max_odd([2, 2, 4]) # => None
+<pre><code>
+class Check:
+    """
+    Метод max_odd: сначала проверяем, является ли каждый элемент списка нечетным числом
+    и находим наибольшее, округляя до целого.
+    Если элемент исходного списка - тоже список - по рекурсии так же ищем максимальный
+    и возвращаем его или None, если нечетных нет или элементы не числа.
+    """
+    def max_odd(self, l:list):
+
+        copy_l = list(l)
+        max_item = 0
+        for i in copy_l:
+            if isinstance(i,int|float) and int(i)%2 != 0 and i > max_item:
+                    max_item= int(i)
+            elif isinstance(i, list):
+                return max(self.max_odd(i),max_item)
+
+        return max_item if max_item else None
+
+
+my_array = Check()
+
+assert my_array.max_odd([1, 2, 3, 4, 4]) == 3
+assert my_array.max_odd([21.0, 2, 3, 4, 4]) == 21
+assert my_array.max_odd(['ololo', 2, 3, 4, [1, 2], None]) == 3
+assert my_array.max_odd(['ololo', 'fufufu']) == None
+assert my_array.max_odd([2, 2, 4]) == None
+assert my_array.max_odd(['ololo', 2, 3, 4, [1, 2, 39.000], None]) == 39
+
+def max_odd(l):
+    return Check().max_odd(l)
+</code></pre>
+    </div>
+    <div id="text9" class="content hidden">
+        # Дан список целых чисел. Необходимо разработать метод sort_list(list), который
+# поменяет местами все минимальные и максимальные элементы массива, а также
+# добавит в конец массива одно минимальное значение из него.
+# Тесты для примеров и проверки:
+# sort_list([]) # => []
+# sort_list([2, 4, 6, 8]) # => [8, 4, 6, 2, 2]
+# sort_list([1]) # => [1, 1]
+# sort_list([1, 2, 1, 3]) # => [3, 2, 3, 1, 1]
+<pre><code>
+class MySort:
+    """
+    В методе sort_list создаем копию исходного списка и сразу же находим
+    максимальный и минимальный элементы, а так же их количество в списке.
+    Чтобы не дублировать код, создал статик-метод list_of_indexes, который создает 2 списка с индексами
+    минимальных и максимальных элементов,
+    и затем присваиваем максимальное/минимальное значение.
+    В конец готового списка добавляем минимальный элемент.
+    """
+    def sort_list(self, l: list):
+        if not isinstance(l, list) or l==[]:
+            return []
+        copy_l = list(l)
+        min_el = min(copy_l)
+        max_el = max(copy_l)
+
+        count_min = copy_l.count(min_el)  # Количество min в l
+        count_max = copy_l.count(max_el)  # Количество max в l
+
+        list_of_min_index = self.list_of_indexes(count_min, min_el, copy_l)
+        list_of_max_index = self.list_of_indexes(count_max, max_el, copy_l)
+
+        for i in list_of_min_index:
+            copy_l[i] = max_el
+        for i in list_of_max_index:
+            copy_l[i] = min_el
+        copy_l.append(min_el)
+
+        return copy_l
+
+    @staticmethod
+    def list_of_indexes(count_max_min:int, max_min_el:int, copy_l:list):
+        list_of_index = []
+        ind = 0
+        for i in range(count_max_min):
+            ind = copy_l.index(max_min_el, ind)
+            list_of_index.append(ind)
+            ind += 1
+        return list_of_index
+
+
+a = MySort()
+
+assert (a.sort_list([2, 4, 6, 8])) == [8, 4, 6, 2, 2]
+assert (a.sort_list([1])) == [1, 1]
+assert (a.sort_list([1, 2, 1, 3])) == [3, 2, 3, 1, 1]
+assert (a.sort_list([])) == []
+
+def sort_list(l):
+    return MySort().sort_list(l)
+</code></pre>
+    </div>
+
+    <div id="text10" class="content hidden">
+        # Разработать метод date_in_future(integer), который вернет дату через integer дней.
+# Если integer не является целым числом, то метод должен вывести текущую дату.
+# Формат возвращаемой методом даты должен иметь следующий вид '24-03-2001
+# 22:33:44'.
+# Тесты для примеров и проверки:
+# date_in_future([]) # => текущая дата
+# date_in_future(2) # => текущая дата + 2 дня
+
+        <pre><code>
+from datetime import datetime,timedelta
+
+def date_in_future(integer:any):
+    """
+    Метод возращает текущую дату + количество дней, если передан int.
+    Иначе просто выводится текущая дата, формат '24-03-2001 22:33:44'
+    """
+    if isinstance(integer, int):
+        now = datetime.now()
+        days = timedelta(days=integer)
+        future = now + days
+        res_date = future.strftime(f'%d-%m-%Y %H:%M:%S')
+        return res_date
+    else:
+        now = datetime.now()
+        res = now.strftime(f'%d-%m-%Y %H:%M:%S')
+        return res
+print(date_in_future(2)) #текущая дата +2 дня в формате '24-03-2001 22:33:44'
+print(date_in_future([])) #текущая дата
+print(date_in_future('4')) #текущая дата
         </code></pre>
-multipart/form-data нужен для передачи файлов через обычную HTML-форму.
-Потому что файл нельзя корректно передать как обычный набор URL-encoded параметров; multipart разбивает тело запроса на части, в том числе для бинарных данных.
+    </div>
 
-  <pre><code>
-&lt;form id="formElem"&gt;
-&lt;input type="text" name="firstName" value="John"&gt;
-Картинка: &lt;input type="file" name="picture" accept="image/*"&gt;
-&lt;input type="submit"&gt;
-&lt;/form&gt;
+    <div id="text11" class="content hidden">
+        # Разработать методы для программы Камень-Ножницы-Бумага. При реализации
+# обработки исключений важно не использовать встроенные классы ошибок с
+# передачей им сообщения, а разработать классы с представленными ниже
+# названиями.
+# Метод rps_game_winner должен принимать на вход массив следующей структуры
+# [ ["player1", "P"], ["player2", "S"] ], где P — бумага, S — ножницы, R — камень, и
+# функционировать следующим образом:
+#
+# • если количество игроков больше 2 необходимо вызывать исключение
+# WrongNumberOfPlayersError
+# • если ход игроков отличается от ‘R’, ‘P’ или ‘S’ необходимо вызывать
+# исключение NoSuchStrategyError
+# • в иных случаях необходимо вернуть имя и ход победителя, если оба
+# игрока походили одинаково - выигрывает первый игрок.
+#
+# Тесты для примеров и проверки:
+# rps_game_winner([['player1', 'P'], ['player2', 'S'], ['player3', 'S']]) #
+# => WrongNumberOfPlayersError
+# rps_game_winner([['player1', 'P'], ['player2', 'A']]) #
+# => NoSuchStrategyError
+# rps_game_winner([['player1', 'P'], ['player2', 'S']]) #
+# => 'player2 S'
+# rps_game_winner([['player1', 'P'], ['player2', 'P']])
+# => 'player1 P'
+        <pre><code>
+class WrongNumberOfPlayersError(Exception):
+    """Исключение, вызываемое, когда игроков не 2."""
+    def __init__(self):
+        super().__init__(self)
 
-&lt;script&gt;
-formElem.onsubmit = async (e) =&gt; {
-e.preventDefault();//отменяет стандартное поведение браузера(отправку формы, перезагрузку страницы)
-let response = await fetch('/article/formdata/post/user-avatar', {
-method: 'POST',
-body: new FormData(formElem)
-});
-let result = await response.json();
-alert(result.message);
-};
-&lt;/script&gt;
-  </code></pre>
+class NoSuchStrategyError(Exception):
+    """Исключение вызывается, когда передан неправильный символ (не P, R или S)"""
+    def __init__(self):
+        super().__init__(self)
 
+def rps_game_winner(l: list):
+    """
+        Функция rps_game_winner принимает список [игрок, Буква].Если игроков не 2 -
+    вызывается пользовательское исключение WrongNumberOfPlayersError; если недопустимая
+    Буква - вызывается пользовательское исключение NoSuchStrategyError.
+        Реализация: создаем словарь, где ключ- кортеж допустимых комбинаций со значением
+    победителя в этом кортеже. Далее создаем объект zip входных данных и проверяем полученную
+    комбинацию в словаре. Таких образом определяем победителя
+    """
+    win_dict = {
+        ('P', 'R'):0,
+        ('S', 'P'):0,
+        ('R', 'S'):0,
+        ('R', 'P'):1,
+        ('P', 'S'):1,
+        ('S', 'R'):1,
+        ('P', 'P'):0,
+        ('S', 'S'):0,
+        ('R', 'R'):0
+    }
+    if len(l) != 2:
+        raise WrongNumberOfPlayersError()
+    a,b = [(a,b) for a,b in zip(l[0], l[1])]
+    if b not in win_dict:
+        raise NoSuchStrategyError()
+    return (f'{a[win_dict.get(b)]} {b[win_dict.get(b)]}')
+
+
+def test_func(l):
+    """
+    Тесты функции rps_game_winner
+
+        param l: [['player1', 'P'], ['player2', 'S'], ['player3', 'S']]
+    return: 'Игроков должно быть 2' (Вызвано исключение WrongNumberOfPlayersError)
+
+        param l: [['player1', 'P'], ['player2', 'A']]
+    return: 'Символ должен быть P, R или S' (Вызвано исключение NoSuchStrategyError)
+
+        param l: [['player1', 'P'], ['player2', 'S']]
+    return: 'player2 S'
+
+        param l: [['player1', 'P'], ['player2', 'P']]
+    return: 'player1 P'
+    """
+    try:
+        res = rps_game_winner(l)
+    except WrongNumberOfPlayersError:
+        res = ('Игроков должно быть 2')
+    except NoSuchStrategyError:
+        res = ('Символ должен быть P, R или S')
+    return res
+
+assert (test_func([['player1', 'P'], ['player2', 'S'], ['player3', 'S']])) == 'Игроков должно быть 2'
+assert (test_func([['player1', 'P'], ['player2', 'A']])) == 'Символ должен быть P, R или S'
+assert (test_func([['player1', 'P'], ['player2', 'S']])) == 'player2 S'
+assert (test_func([['player1', 'P'], ['player2', 'P']])) == 'player1 P'
+        </code></pre>
+    </div>
+
+    <div id="text12" class="content hidden">
+        # Анаграмма — литературный приём, состоящий в перестановке букв или звуков
+# определённого слова (или словосочетания), что в результате даёт другое слово
+# или словосочетание.
+# Разработайте метод combine_anagrams(words_array), который принимает на вход
+# массив слов и разбивает их в группы по анаграммам, регистр букв не имеет
+# значения при определении анаграмм.
+# Тест для примеров и проверки:
+# combine_anagrams(["cars", "for", "potatoes", "racs", "four", "scar",
+# "creams", "scream"]) # => [ ["cars", "racs", "scar"], ["four"], ["for"],
+# ["potatoes"], ["creams", "scream"] ]
+<pre><code>
+class Anagramm:
+    """
+    Метод combine_anagrams принимает список строк и возвращает список слов,
+    являющихся анаграммами.
+    В цикле сравнимаем каждое следующее слово с предыдущим(они отсортированы)
+    Таким образом создается отдельный список слов анаграм. В результате создается
+    список списков слов анаграм
+    """
+    def combine_anagrams(self, list_ar: list[str]):
+        if not isinstance(list_ar, list):
+            return []
+        l = list(list_ar)
+        combine_result = []
+        for n in range(len(l) - 1):
+            res1 = []
+            res1.append(l[n].lower())
+            for k in range(1 + n, len(l)):
+                if sorted(l[n]) == sorted(l[k].lower()):
+                    res1.append(l[k])
+                    l[k] = ''
+            combine_result.append(res1)
+            combine_result = [i for i in combine_result if '' not in i]
+
+        return combine_result
+
+
+anagram = Anagramm()
+assert (anagram.combine_anagrams(["cars", "for", "potatoes", "racs", "four", "scar", "creams", "scream"])) == \
+    [['cars', 'racs', 'scar'], ['for'], ['potatoes'], ['four'], ['creams', 'scream']]
+assert (anagram.combine_anagrams(['python', 'lypton', 'caiman', 'recap', 'caper', 'pacer', 'maniac'])) == \
+    [['python'], ['lypton'], ['caiman', 'maniac'], ['recap', 'caper', 'pacer']]
+assert (anagram.combine_anagrams(3)) == []
+
+def combine_anagrams(list_ar):
+    return Anagramm().combine_anagrams(list_ar)
+</code></pre>
+    </div>
+
+    <div id="text13" class="content hidden"># Написать метод multiply_numbers(inputs), который вернет произведение цифр,
+# входящих в inputs.
+# Тест для примеров и проверки:
+# multiply_numbers() # => None
+# multiply_numbers('ss') # => None
+# multiply_numbers('1234') # => 24
+# multiply_numbers('sssdd34') # => 12
+# multiply_numbers(2.3) # => 6
+# multiply_numbers([5, 6, 4]) # => 120
+
+<pre><code>
+def multiply_numbers(inputs=None):
+    """
+    Метод создает сначала список элементов,
+    а затем список чисел и производит их перемножение. Иначе если цифр нет- None
+    """
+
+    if inputs is None:
+        return None
+    str_input = str(inputs)
+    list_input = ('_'.join(str_input)).split('_')
+
+    int_list = [int(x) for x in list_input if x.isdigit()]
+    if int_list == []:
+        return None
+    prdct = 1
+    for i in int_list:
+        prdct *=int(i)
+    return (prdct)
+</code></pre>
+</div>
+
+    <div id="text14" class="content hidden"># Необходимо разработать метод connect_dicts(dict1, dict2), который соединит два
+# переданных словаря, значениями ключей в которых являются числа, и вернет
+# новый словарь, полученный по следующим правилам:
+#
+# • приоритетными являются ключи того словаря, сумма значений ключей
+# которого больше (если суммы значений ключей будут равны, то второй
+# словарь считается более приоритетным)
+# • ключи со значениями меньше 10 не должны попасть в финальный
+# словарь
+# • получившийся словарь должен вернуться упорядоченным по значениям
+# ключей в порядке возрастания.
+#
+# Тесты для примеров и проверки:
+# connect_dicts({ "a": 2, "b": 12 }, { "c": 11, "e": 5 }) # =>
+# { "c": 11, "b": 12 }
+# connect_dicts({ "a": 13, "b": 9, "d": 11 }, { "c": 12, "a": 15 }) # =>
+# { d: 11, "c": 12, "a": 13 }
+# connect_dicts({ "a": 14, "b": 12 }, { "c": 11, "a": 15 }) # =>
+# { "c": 11, "b": 12, "a": 15 }
+<pre><code>
+class Connect_dicts:
+    """
+    Метод connect_dicts: определяем приоритет переданных словарей, и словарь с меньшим приоритетом
+    обновляем через метод update, чтобы перезапиcались значения ключей приоритетного словаря, меняя
+     местами ключ-значение. Далее сортируем словарь и снова меняем ключ-значение в итоговый
+    результат sorted_res
+    """
+    def connect_dicts(self, dict1:dict , dict2:dict ):
+
+        prior1 = 0
+        for i in dict1.values():
+            prior1+=i
+        prior2 = 0
+        for i in dict2.values():
+            prior2+=i
+
+        if prior1>prior2:
+            dict2.update(dict1)
+            res = {y:x for x,y in dict2.items() if y>=10}
+        else:
+            dict1.update(dict2)
+            res = {y: x for x, y in dict1.items() if y >= 10}
+        sorted_res = {y:x for x, y in sorted(res.items())}
+
+        return (sorted_res)
+
+a = Connect_dicts()
+assert (a.connect_dicts({ "a": 2, "b": 12 }, { "c": 11, "e": 5 })) == {'c': 11, 'b': 12}
+assert (a.connect_dicts({ "a": 13, "b": 9, "d": 11 }, { "c": 12, "a": 15 })) == {'d': 11, 'c': 12, 'a': 13}
+assert (a.connect_dicts({ "a": 14, "b": 12 }, { "c": 11, "a": 15 })) == {'c': 11, 'b': 12, 'a': 15}
+</code></pre>
+</div>
+
+    <div id="text15" class="content hidden">
+        # Разработайте функцию count_words(string), которая будет возвращать словарь со
+# статистикой частоты употребления входящих в неё слов.
+# Тесты для примеров и проверки:
+# count_words("A man, a plan, a canal -- Panama") # => {"a": 3, "man": 1,
+# "canal": 1, "panama": 1, "plan": 1}
+# count_words("Doo bee doo bee doo") # => {"doo": 3, "bee": 2}
+
+<pre><code>
+def count_words(a = ""):
+    """Метод создает список слов, а затем считаем количество каждых"""
+
+    s = a.lower()
+    s = s.replace('!', '')
+    s = s.replace('-', '')
+    s = s.replace(',', '')
+    s = s.replace('.', '')
+    s = s.replace('?', '')
+    s = s.replace('\'', '')
+    s = s.replace('(', '')
+    s = s.replace(')', '')
+    s = s.split()
+
+    d = {}
+    for i in sorted(s):
+        d[i]= s.count(i)
+    return (d)
+</code></pre>
+    </div>
+
+    <div id="text16" class="content hidden"># Реализуйте класс Dessert c геттерами и сеттерами name и calories, конструктором,
+# принимающим на вход name и calories (не обязательные параметры), а также двумя
+# методами is_healthy (возвращает true при условии калорийности десерта менее
+# 200) и is_delicious (возвращает true для всех десертов).
+<pre><code>
+class Dessert:
+    """
+    Клачч принимает необязательные параметры name, calories
+    Геттеры и сеттеры реализованы через объект свойства property
+    Атрибуты записываются в _name и _calories
+
+    """
+    def __init__(self, name:str=None, calories:int=None):
+        if not isinstance(name, str):
+            raise ValueError('Введите строку')
+        self.name = name
+        if not isinstance(calories, int):
+            raise ValueError('Введите число')
+        self.calories = calories
+
+    @property
+    def name(self):
+        return self._name
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @property
+    def calories(self):
+        return self._calories
+
+    @calories.setter
+    def calories(self, value):
+        self._calories = value
+
+    def is_healthy(self):
+        """
+        (возвращает true при условии калорийности десерта менее 200)
+        """
+        return True if self._calories < 200 else False
+
+    def is_delicious(self):
+        """
+        (возвращает true для всех десертов)
+        """
+        return True
+</code></pre>
+    </div>
+
+    <div id="text17" class="content hidden">
+        # Создайте класс JellyBean, расширяющий класс Dessert (из Упражнения 11) новым
+# геттером и сеттером для атрибута flavor (все параметры являются не
+# обязательными). Измените метод is_delicious таким образом, чтобы он возвращал
+# false только в тех случаях, когда flavor равняется «black licorice».
+<pre><code>
+from taks_11 import Dessert
+
+class JellyBean(Dessert):
+
+    def __init__(self, name:str=None, calories:int=None, flavour:str=None):
+        super().__init__(name, calories)
+        self._flavour = flavour
+
+    @property
+    def flavour(self):
+        return self._flavour
+
+    @flavour.setter
+    def flavour(self, value):
+        if  isinstance(value, str):
+            self._flavour = value
+        else:
+            raise AttributeError('Должна быть строка')
+    def is_delicious(self):
+        """Переопределяюм метод"""
+        if self._flavour == 'black licorice':
+            return False
+        return True
+</code></pre>
+    </div>
+
+    <div id="text18" class="content hidden">
+        # Напишите декоратор @cached, который кэширует результаты функции, чтобы
+# избежать повторных вычислений для одних и тех же аргументов. Декоратор
+# должен поддерживать:
+#
+# • ограничение размера кэша: при превышении максимально хранимого
+# количества записей (max_size) удаляются самые старые записи:
+# • если max_size=None, то размер кэша не ограничен
+# • если max_size не соответствует целому числу, то также
+# инициализировать его как None
+# • время жизни записей: автоматически удалять результаты, сохранённые
+# более seconds назад:
+# • если seconds=None, то записи не устаревают
+# • размер кэша не ограничен, если seconds не соответствует целому
+# числу, то также инициализировать его как None
+# • декоратор должен учитывать как позиционные (*args), так и
+# именованные аргументы (**kwargs)
+#
+# 13
+#
+# Тесты для примеров и проверки:
+# @cached(max_size=3, seconds=10)
+# def slow_function(x):
+# print(f"Вычисляю для {x}...")
+# return x ** 2
+# # Первый вызов — вычисляется
+# print(slow_function(2)) # Вывод: "Вычисляю для 2..." → 4
+# # Повторный вызов с теми же аргументами — берётся из кэша
+# print(slow_function(2)) # Вывод: 4 (без вычисления)
+# # Через 15 секунд кэш устареет, и будет новое вычисление
+# time.sleep(15)
+# print(slow_function(2)) # Вывод: "Вычисляю для 2..." → 4
+<pre><code>
+import time
+def cached( max_size:int=None, seconds:int=None):
+    """
+    Декоратор создает словарь. Проверяем налицие ключа и сразу его возвращаем если находим.
+    При привышении max_size - удаляется  через метод pop первый ключ:значение(что возможно не будет работать
+    в python версии меньше 3.7)
+    Время отсчитывается с момента создания словаря и затем(после очистки)- с момента добавления нового ключа
+
+    """
+    if not isinstance(seconds, int):
+        seconds = None
+    if not isinstance(max_size, int):
+        max_size = None
+    d = {}
+    start =time.time()
+    def wrapper(func):
+        def inner(*args):
+            nonlocal start
+            end = time.time()
+            # print('time =', end-start)
+            if  (seconds==None or (end - start)<seconds):
+                print('end-start<seconds')
+                if d.get(args[0], None) == None:
+                    if max_size==None or len(d)<max_size:
+                        d[args[0]] = func(args[0])
+                        print(f'1) Ключ не найден. Поэтому записываем {args[0]} в кэш', d)
+                        return d[args[0]]
+                    elif len(d)>=max_size:
+                        first_key = next(iter(d))
+                        d[args[0]] = func(args[0])
+                        d.pop(first_key)
+                        print(f'Удален первый элемент в кэше')
+                        print(f'2)Записываем {args[0]} в кэш', d)
+                        return d[args[0]]
+                res = d.get(args[0])
+                print(f'3) Ключ найден, поэтому берем {args[0]} из кэша')
+                return res
+            d.clear()
+            start = time.time()
+            print('Кэш очистили, так как end-start > seconds')
+            d[args[0]] = func(args[0])
+            print(f'4)Записываем {args[0]} в кэш', d)
+            return d[args[0]]
+        return inner
+    return wrapper
+
+@cached(2,seconds=10)
+def slow_function(x):
+    print(f'\n.......Долгое вычисление функции с аргументом {x}.......')
+    time.sleep(1)
+    return x*2
+
+</code></pre>
+    </div>
+
+    <div id="text19" class="content hidden">
+        # Реализуйте класс EvenNumbers, который в конструкторе принимает целое число n
+# — количество чётных чисел для генерации. Итератор должен выдавать числа по
+# порядку, начиная с 0: 0, 2, 4, ..., 2*(n-1).
+# Тесты для примеров и проверки:
+# evens = EvenNumbers(5)
+# for num in evens:
+# print(num) # Должно вывести 0, 2, 4, 6, 8
+<pre><code>
+class EvenNumbers:
+    """
+        Класс, принимающий целое число 'n' и возвращающий итератор
+        целых четных чисел 'n'- штук. Иначе берется первый позиционный аргумент,
+        или если их нет - значение первого именованного аргумента.
+        Если аргументов нет - вызывается исключение TypeError('Нет аргументов')
+    """
+
+    def __init__(self, *args, **kwargs):
+
+        if not args and not kwargs:
+            raise TypeError('Нет аргументов')
+        elif not args and kwargs:
+            self.n = [v for k,v in kwargs.items()][0]
+        elif len(args)>1 :
+            self.n = args[0]
+            print(f'Взят первый аргумент, {args[0]}')
+        else:
+            self.n = args[0]
+        if self.n is None:
+            raise TypeError('Нет аргументов')
+
+    def __iter__(self):
+        if not isinstance(self.n, int):
+            raise ValueError('Введите целое число больше 0')
+        if  self.n < 0:
+            raise ValueError('Введите целое число больше 0')
+
+        return (i for i in range(2*(self.n)) if i%2==0)
+</code></pre>
+    </div>
+
+    <div id="text20" class="content hidden">
+        # Задание является не обязательным, но его выполнение поможет лучше
+# ознакомиться с итераторами.
+# Реализовать класс BlockTranspositionCipher, который будет шифровать и
+# расшифровывать текст методом блочной перестановки с помощью текстового
+# ключа.
+# Основная идея:
+#
+# 1. Ключ — строка, состоящая из уникальных английских букв. Пример:
+# acb
+# 2. Шифрование — алгоритм, который преобразует исходный текст в
+# набор зашифрованных символов.
+# 3. Дешифрование — алгоритм, который преобразует набор
+# зашифрованных символов в исходный текст.
+#
+# 14
+#
+# Ключ и его обработка:
+#
+# • ключ состоит только из букв английского алфавита
+# • символы в ключе должны быть уникальны (регистр букв не имеет
+# значения — "A" и "a" считаются одинаковыми)
+# • ключ преобразуется в числовой массив. Каждому символу
+# присваивается его порядковый номер в алфавите (a = 0, b = 1, ..., z =
+# 25)
+#
+# Правила шифрования:
+#
+# • исходный текст делится на блоки длины, равной длине ключа
+# • если длина блока не кратна длине ключа, то оставшийся блок
+# дополняется пробелами
+# • в каждом из блоков символы переставляются согласно порядку из
+# ключа
+#
+# Пример алгоритма шифрования:
+# Ключ: "acb"
+# Текст: "helloworld"
+# Блоки: ["hel", "low", "orl", "d "]
+# Блоки после перестановки: ["hle", "lwo", "olr", "d "]
+# Результат: "hlelwoolrd "
+# Правила дешифрование:
+#
+# • исходный порядок восстанавливает символы в каждом блоке
+# • лишние пробелы после дешифровки удаляются
+#
+# Валидации и работа с ошибками:
+#
+# • проверяется, что ключ состоит только из букв английского алфавита
+# • проверяется, что все буквы в ключе уникальны, игнорируя регистр
+# • если ключ не соответствует требованиям, вызывается исключение
+# ValueError с понятным сообщением об ошибке
+#
+# Тесты для примеров и проверки:
+# Пример 1: Шифрование с явной итерацией по блокам
+# text = "HELLOWORLD"
+# key = "bAc"
+# print("Процесс шифрования по блокам:")
+# cipher = BlockTranspositionCipher(text, key)
+# for i, encrypted_block in enumerate(cipher, 1):
+# print(f"Блок {i}: '{encrypted_block}'")*
+#
+# 15
+#
+# Пример 2: Полное шифрование
+# cipher = BlockTranspositionCipher(text, key)
+# encrypted = ''.join(cipher)
+# print(f"\nПолный зашифрованный текст: '{encrypted}'")
+# Пример 3: Дешифрование с итерацией
+# print("\nПроцесс дешифрования по блокам:")
+# decipher = BlockTranspositionCipher(encrypted, key, decrypt=True)
+# for i, decrypted_block in enumerate(decipher, 1):
+# print(f"Блок {i}: '{decrypted_block}'")
+# Пример 4: Полное дешифрование с обрезкой пробелов
+# decipher = BlockTranspositionCipher(encrypted, key, decrypt=True)
+# decrypted = ''.join(decipher)
+# print(f"\nПолный расшифрованный текст: '{decrypted}'")
+<pre><code>
+class BlockTranspositionCipher:
+    """
+        Класс принимает 2 обязательных параметра.
+     Итак, что я тут намудрил...Проверяю, делится ли текст на блоки длины ключа без остатка.
+     Если остаток есть - создаю список длинною нужного количества блоков и заполняю их None.
+     Прохожу в цикле и каждый None заменяю на элементы тескта.Таким образом получаем
+     определенное количество блоков длинною равной длине ключа, а последний блок
+     заполняется нехватающим числом пробелов
+     """
+
+    def __init__(self, text, key, decrypt = False):
+        self.text = text
+        self.key = self.validate_key(key)
+        if decrypt:
+            self.key = self.invert_key(self.key)
+        self.cript_res = []
+
+
+        if (len(self.text) % len(self.key)):
+            res = [None] * ((len(self.text) // len(self.key)) + 1)
+            for i in range((len(self.text) // len(self.key)) + 1):
+                res[i] = self.text[i * len(self.key):i * len(self.key) + len(self.key)]
+        else:
+            res = [None] * ((len(self.text) // len(self.key)))
+            for i in range((len(self.text) // len(self.key))):
+                res[i] = self.text[i * len(self.key):i * len(self.key) + len(self.key)]
+        r = res[-1] + len(self.key) * ' '
+        res[-1] = r[:len(self.key)]
+
+
+        for i in res:
+            block =''
+            for j in self.key:
+                block += (i[int(j)]) #Делаю перестновку в блоке согласно элементам ключа
+                if len(block) == len(self.key) and ' ' not in block:
+                    self.cript_res.append(block)
+                    block=''
+                if len(block) == len(self.key) and ' ' in block  and decrypt==False:
+                    s = block.count(' ')
+                    # stprip_block = block.strip() + ' '*s
+                    # self.cript_res.append(stprip_block[:len(self.key)]) #Перемещаю пробелы в конец блока
+                    self.cript_res.append(block)
+                if len(block) == len(self.key) and ' ' in block  and decrypt==True:
+                    # stprip_block = block.strip()
+                    # self.cript_res.append(stprip_block.strip())
+                    self.cript_res.append(block)
+
+
+    def __iter__(self):
+        """Устанавливаем значение -1, чтобы при инициализации итератора
+        начальное значение стало 0 -т.е. первый элемент списка"""
+        self.i = -1
+        return self
+    def __next__(self):
+        """Проходимся по всем блокам, иначе исключение StopIteration"""
+        if self.i + 1 < len(self.cript_res):
+            self.i += 1
+            return self.cript_res[self.i]
+        else:
+            raise StopIteration
+
+    @staticmethod
+    def validate_key(k:str):
+        """Валидируем ключ и возвращаем список чисел, соответствующих каждой букве ключа"""
+        key =k.lower()
+        if not key.isalpha():
+            raise ValueError('Ключ должен содержать английские буквы a..z')
+        if len(set(key)) != len(key):
+            raise ValueError('Ключ не должен сожержать повторяющиеся буквы')
+        list_int_key = []
+        for i in key:
+            list_int_key.append(ord(i) - 97)
+        return  list_int_key
+
+    @staticmethod
+    def invert_key(key):
+        """Обратный ключ"""
+        inv = [0] * len(key)
+        for i, j in enumerate(key):
+            inv[j] = i
+        return inv
+
+def test1(key):
+    """
+    Небольшой тест посмотреть исключения и шифрованный\дешифрованный результат
+    """
+    text = "HELLOWORLD"
+    try:
+        cipher = BlockTranspositionCipher(text, key)
+        encrypted = ''.join(cipher)
+        decipher = BlockTranspositionCipher(encrypted, key, decrypt=True)
+        decrypted = ''.join(decipher)
+        return ('encrypted: ', encrypted,'decrypted', decrypted)
+    except ValueError as e:
+        return (str(e))
+
+
+assert test1('abca') == 'Ключ не должен сожержать повторяющиеся буквы'
+assert test1('ac2b') == 'Ключ должен содержать английские буквы a..z'
+assert (test1('acb')) == ('encrypted: ', 'HLELWOOLRD  ', 'decrypted', 'HELLOWORLD  ')
+</code></pre>
     </div>
 
 </div>
