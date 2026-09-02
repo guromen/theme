@@ -159,6 +159,18 @@ code {
     <button class="topic-button" data-topic="20">
         Задача 15
     </button>
+
+    <button class="topic-button" data-topic="21">
+        Raise exceptions
+    </button>
+
+    <button class="topic-button" data-topic="22">
+        Контекстный менеджер
+    </button>
+
+    <button class="topic-button" data-topic="23">
+        Декораторы
+    </button>
 </div>
 
 <div id="text1" class="content hidden">
@@ -474,7 +486,7 @@ let result = await response.json(); // читать тело ответа в ф�
 - `body` – данные для отправки (тело запроса) в виде текста, `FormData`, `BufferSource`, `Blob` или `UrlSearchParams`.
  </div>
 
-    <div id="text5" class="content ">
+    <div id="text5" class="content hidden">
                     <strong>Формы</strong>
                     Самое главное — как вообще работает &lt;form&gt;
 
@@ -1452,6 +1464,144 @@ assert test1('abca') == 'Ключ не должен сожержать повт�
 assert test1('ac2b') == 'Ключ должен содержать английские буквы a..z'
 assert (test1('acb')) == ('encrypted: ', 'HLELWOOLRD  ', 'decrypted', 'HELLOWORLD  ')
 </code></pre>
+    </div>
+
+    <div id="text21" class="content ">
+        <strong>Полная конструкция</strong>
+try:
+    ...
+except ValueError: // или except (ValueError, TypeError): print("Ошибка данных")
+    ...
+except TypeError: // Если произошла соответствующая ошибка
+    ...
+else: // Если ошибки не было
+    ...
+finally: // Этот блок также необязателен, но если он присутствует, его код будет выполнен всегда(даже в функции после return, даже после break, continue): и при успешном завершении try, и при возникновении  исключения (после except или до него, если исключение не было перехвачено).
+    ...
+        <strong>finally может "съесть" исключение:</strong>
+            def f():
+                try:
+                    1 / 0
+                finally:
+                    return 100
+
+            print(f()) #100. Никакого исключения не будет. Именно поэтому не рекомендуется делать return внутри finally.
+        <strong> Получить текст ошибки</strong>
+try:
+ x = int("abc")
+except ValueError as e:
+    print(e) // объект исключения
+
+        <strong> raise — самостоятельно вызвать исключение</strong>
+age = -5
+if age < 0:
+    raise ValueError("Возраст не может быть отрицательным")
+
+        <strong>Генерация исключени и оператор raise:</strong>
+       <pre><code>
+try:
+    age = int(input("Введите возраст: "))
+    if age > 110 or age < 1:
+        raise Exception("Некорректный возраст") //Оператору raise передается объект Exception
+           //В конструктор этого типа можно ему передать сообщение, которое затем можно вывести пользователю
+    print("Ваш возраст:", age)
+except ValueError:
+    print("Введены некорректные данные")
+except Exception as e:
+    print(e)
+print("Завершение программы")
+       </code></pre>
+        В итоге, если age будет больше 110 или меньше 1, то сработает оператор raise, который сгенерирует исключение.
+        В итоге управление программой перейдет к блоку except, который обрабатывает исключения типа Exception
+
+        <strong>Создание своих типов исключения</strong>
+        <pre><code>
+class MyOwnException(Exception):
+    def __init__(self, age, minage, maxage):
+        self.age = age
+        self.minage = minage
+        self.maxage = maxage
+
+    def __str__(self):
+        return f"Недопустимое значение: {self.age}. " \
+               f"Возраст должен быть в диапазоне от {self.minage} до {self.maxage}"
+        </code></pre>
+        В начале здесь определен класс MyOwnException, который наследуется от класса Exception. Как правило, собственные классы исключений наследуются от класса Exception.
+        В конструкторе PersonAgeException получаем три значения - собственное некорректное значение, которое послужило причиной исключения, а также минимальное и максимальное значения возраста.
+        В функции __str__ определяем текстовое представление класса - по сути сообщение об ошибке.
+        Затем в каком-нибудь обработчике генерируем исключение:
+        else:
+            raise PersonAgeException(age, minage, maxage)
+        И далее, нам следует учитывать, что наш обработчик может сгенерировать исключение при передаче некорректного значения. Поэтому вызов обработчика обертывается в конструкцию try..except:
+        <pre><code>
+try:
+    наш обработчик(внутри которого raise PersonAgeException(age, minage, maxage))
+except PersonAgeException as e:
+    print(e)    # Недопустимое значение: -23. Возраст должен быть в диапазоне от 1 до 110
+        </code></pre>
+    </div>
+
+    <div id="text22" class="content">
+        <strong> ----------Контекстный менеджер-----------</strong>
+ Контекстный менеджер — это объект, который определяет контекст выполнения для блока кода. Он гарантирует, что определенные действия
+ будут выполнены при входе в блок (__enter__) и при выходе из него (__exit__), независимо от того, как завершился блок (успешно или с ошибкой).
+ Конструкция with используется для работы с контекстными менеджерами, обеспечивая автоматическое управление ресурсами, такими как файлы, сетевые соединения или блокировки.
+ Методы контекстного менеджера:
+
+__enter__(self): # Вызывается при входе в блок with. Его возвращаемое значение (если есть) присваивается переменной после as
+__exit__(self, exc_type, exc_val, exc_tb): #Вызывается при выходе из блока with. Принимает информацию об исключении, если оно произошло.Если метод возвращает True,
+ исключение подавляется.
+
+ Создание своих контекстных менеджеров: можно создать класс, реализующий __enter__ и __exit__, или использовать декоратор @contextlib.contextmanager для функций-генераторов.
+    </div>
+
+    <div id="text23" class="content">
+        <strong>-------------Декораторы------------------</strong>
+
+Декоратор — это синтаксический сахар для вызова функции, которая оборачивает другую функцию. Синтаксис @decorator_name перед
+ определением функции эквивалентен my_function = decorator_name(my_function).
+ Декоратор обычно представляет собой функцию, которая:
+ Принимает функцию func в качестве аргумента.
+ Определяет внутреннюю функцию-обертку (wrapper), которая выполняет дополнительную логику до или после вызова func.
+ Возвращает эту внутреннюю функцию-обертку.
+<pre><code>
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Что-то происходит до вызова функции.")
+        result = func(*args, **kwargs)
+        print("Что-то происходит после вызова функции.")
+        return result
+    return wrapper
+
+@my_decorator
+def say_hello(name):
+    print(f"Привет, {name}!")
+
+say_hello("Мир")
+ Что-то происходит до вызова функции.
+ Привет, Мир!
+ Что-то происходит после вызова функции.
+</code></pre>
+        <strong> Декоратор с параметрами</strong>
+        <pre><code>
+def repeat(num_times):
+    def decorator_repeat(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(num_times):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator_repeat
+
+@repeat(num_times=3)
+def greet(name):
+    print(f"Привет, {name}!")
+
+greet("Алиса")
+# Привет, Алиса!
+# Привет, Алиса!
+# Привет, Алиса!
+        </code></pre>
     </div>
 
 </div>
