@@ -159,17 +159,20 @@ code {
     <button class="topic-button" data-topic="20">
         Задача 15
     </button>
-
     <button class="topic-button" data-topic="21">
         Raise exceptions
     </button>
-
     <button class="topic-button" data-topic="22">
         Контекстный менеджер
     </button>
-
     <button class="topic-button" data-topic="23">
         Декораторы
+    </button>
+    <button class="topic-button" data-topic="24">
+        GIT
+    </button>
+    <button class="topic-button" data-topic="25">
+        ООП
     </button>
 </div>
 
@@ -1466,7 +1469,7 @@ assert (test1('acb')) == ('encrypted: ', 'HLELWOOLRD  ', 'decrypted', 'HELLOWORL
 </code></pre>
     </div>
 
-    <div id="text21" class="content ">
+    <div id="text21" class="content hidden">
         <strong>Полная конструкция</strong>
 try:
     ...
@@ -1541,7 +1544,7 @@ except PersonAgeException as e:
         </code></pre>
     </div>
 
-    <div id="text22" class="content">
+    <div id="text22" class="content hidden">
         <strong> ----------Контекстный менеджер-----------</strong>
  Контекстный менеджер — это объект, который определяет контекст выполнения для блока кода. Он гарантирует, что определенные действия
  будут выполнены при входе в блок (__enter__) и при выходе из него (__exit__), независимо от того, как завершился блок (успешно или с ошибкой).
@@ -1555,7 +1558,7 @@ __exit__(self, exc_type, exc_val, exc_tb): #Вызывается при выхо
  Создание своих контекстных менеджеров: можно создать класс, реализующий __enter__ и __exit__, или использовать декоратор @contextlib.contextmanager для функций-генераторов.
     </div>
 
-    <div id="text23" class="content">
+    <div id="text23" class="content hidden">
         <strong>-------------Декораторы------------------</strong>
 
 Декоратор — это синтаксический сахар для вызова функции, которая оборачивает другую функцию. Синтаксис @decorator_name перед
@@ -1602,6 +1605,84 @@ greet("Алиса")
 # Привет, Алиса!
 # Привет, Алиса!
         </code></pre>
+    </div>
+
+    <div id="text24" class="content hidden">
+git init -	Создать Git-репозиторий в папке
+git clone  URL -	Скачать репозиторий с GitHub
+
+git status	 - Показать состояние файлов
+git add file -	Добавить файл в staging
+git add . -	Добавить все изменения в staging
+git commit -m "message"	 - Создать коммит
+
+git push	 - Отправить коммиты на GitHub
+git pull -	Скачать изменения с GitHub и применить их
+git fetch -	Скачать изменения, но не применять их
+
+git log -	Посмотреть историю коммитов
+git diff -	Посмотреть изменения до git add
+git diff   --staged -	Посмотреть изменения после git add
+
+git branch -	Показать ветки
+git branch  - name	Создать ветку
+git switch - name	Перейти на ветку
+git switch  -c name	 - Создать ветку и сразу перейти в неё
+git merge name -	Объединить ветку с текущей
+
+git remote -v -	Показать подключённые удалённые репозитории
+git remote add  origin URL	 - Подключить GitHub-репозиторий
+
+git restore file -	Отменить изменения в файле.Файл вернётся к состоянию последнего коммита. ⚠️ Незакоммиченные изменения будут потеряны.
+git restore --staged file.txt - Убрать файл из staging. При этом изменения останутся в файле.
+git rm file.txt/folder - Удалить файл/(папку folder) из компьютера и Git
+git rm --cached file.txt/folder - Перестать отслеживать файл/(папку folder), но оставить его на компьютере
+
+        <strong>Git add</strong>
+Добавить конкретный файл: git add index.html
+Несколько файлов: git add index.html style.css
+Всё изменённое: git add .
+Рабочая папка | git add -> Staging │ git commit-> Repository │ git push-> GitHub
+
+        <strong>Ветки</strong>
+Посмотреть ветки: git branch
+Создать: git branch feature-login
+Перейти: git switch feature-login
+Создать + сразу перейти: git switch -c feature-login
+Объединить ветку: git switch main ;(&&) merge feature-login
+
+Например:
+main
+ │
+ ├── feature-login
+ │       ↓
+ │    работа
+ │       ↓
+ └──── merge ───→ main
+    </div>
+    <div id="text25" class="content">
+        Инкапсуляция - неважно как работают внутренние алгоритмы, нет доступа из вне(можно через разрешенные свойства и методы)
+        Полиморфизм - оперирование разными типами объектов через их единый базовый класс
+        Наследование - доступ к общим св-м и методам класса, можем наследовать и расширять классы
+
+        <strong>Атрибуты</strong>  <em>'class.name'</em>.атрибут
+        Класс.метод(экземпляр)==экземпляр.метод()
+        
+        В пространстве имен пишем переменные (атрибуты), можем прочитать или переопределить их через 'class.name'.'атрибут'
+        <em>'class.name'.__dict__ </em> - коллекция атрибутов
+        Экземпляры (без собственных атрибутов, с независимыми пространтсвами имен) a,b одного класса Point (с атрибутом 'color')  имеют пустой 'a,__dict__'
+Но если мы создадим a.color='new_value' - то знак '=' создаст переменную color в текущем пространстве имен экземпляра a
+        (Поэтому метод hasattr(a, color) не говорит, в каком пространстве имен находится атрибут color)
+
+        <strong>Методы</strong>
+- getattr(Point, 'prop') - ошибка!, если атрибута нет => безопасно
+- getattr(Point, 'prop', False) // вернет значение(или функцию-метод) или False если не существует
+- setattr(Point, 'prop', 1) - создаст или переопределит существующий атрибут
+- delattr(Point, 'color') -  или del Point.color - удалит свойство.Повторно вызовет ошибку!(Лучше проверить hasattr)
+- hasattr(Point, 'color') //True/False (Не говорит в каком пространстве имен)
+
+        <strong>'class.name'.__doc__</strong>
+        doc-string
     </div>
 
 </div>
