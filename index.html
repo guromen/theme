@@ -1629,6 +1629,7 @@ git branch  - name	Создать ветку
 git switch - name	Перейти на ветку
 git switch  -c name	 - Создать ветку и сразу перейти в неё
 git merge name -	Объединить ветку с текущей
+git --rebase - Переписывает историю коммитов(лучше не испольщовать в команде)
 
 git remote -v -	Показать подключённые удалённые репозитории
 git remote add  origin URL	 - Подключить GitHub-репозиторий
@@ -1666,25 +1667,115 @@ main
         Наследование - доступ к общим св-м и методам класса, можем наследовать и расширять классы
 
         <strong>Атрибуты</strong>  <em>'class.name'</em>.атрибут
+        Методы класса тоже атрибуты
         Класс.метод(экземпляр)==экземпляр.метод()
-        
+
         В пространстве имен пишем переменные (атрибуты), можем прочитать или переопределить их через 'class.name'.'атрибут'
         <em>'class.name'.__dict__ </em> - коллекция атрибутов
         Экземпляры (без собственных атрибутов, с независимыми пространтсвами имен) a,b одного класса Point (с атрибутом 'color')  имеют пустой 'a,__dict__'
 Но если мы создадим a.color='new_value' - то знак '=' создаст переменную color в текущем пространстве имен экземпляра a
         (Поэтому метод hasattr(a, color) не говорит, в каком пространстве имен находится атрибут color)
 
-        <strong>Методы</strong>
+        <strong>Методы классов</strong>
 - getattr(Point, 'prop') - ошибка!, если атрибута нет => безопасно
 - getattr(Point, 'prop', False) // вернет значение(или функцию-метод) или False если не существует
 - setattr(Point, 'prop', 1) - создаст или переопределит существующий атрибут
 - delattr(Point, 'color') -  или del Point.color - удалит свойство.Повторно вызовет ошибку!(Лучше проверить hasattr)
 - hasattr(Point, 'color') //True/False (Не говорит в каком пространстве имен)
 
-        <strong>'class.name'.__doc__</strong>
-        doc-string
-    </div>
+        <em>'class.name'.__doc__</em> -  doc-string
 
+        <strong>Методы атрибутов</strong>
+                <b>__getattribute__(self, item)</b>
+        Вызывается при обращении к атрибуту - a.x
+        <pre><code>
+        def __getattribute__(self, item):
+          Тут прописывается логика, напирмер запрет доступа к атрибуту 'x':
+          if item = 'x':
+            raise ValueError('Доступ запрещен')
+          return object.__getattribute__(self, item) //Без return будет None
+        </code></pre>
+
+        <b>__getattr__(self, item)</b>
+        Вызывается при обращении к несуществующему атрибуту, иначе без этого метода будет Ошибка AttributeError
+        <pre><code>
+        def __getattr__(self, item):
+          Например просто вернем False, если атрибута нет:
+            if item == 'z':
+              return False
+        </code></pre>
+        <b>__setattr__(self, key, value)</b>
+        Автоматически вызывается при присвоении какого-то значения атрибуту a.x = value
+        <pre><code>
+        def __setattr__(self, key, value):
+          Тут прописывается логика, например запрет создания атрибута 'z':
+            if item == 'z':
+              raise AttributeError("Недопустимое значение")
+            else:
+              object.__setattr__(self, key, value) //Без return, и если написать self.x=value->рекурсия
+              либо self.__dict__[key] = value
+        </code></pre>
+        <b>__deltattr__(self, item)</b>
+        Вызывается при удалении атрибута
+        <pre><code>
+        def __delattr__(self, item):
+          Некая логика
+          object.__delattr__(self, item) //Само удаление атрибута
+        </code></pre>
+
+    <b>__new__()</b>
+    Вызывается перед созданием объекта класса -> Объект класса -> Вызов __init__()
+    <pre><code>
+        class Point:
+            def __new__(cls, *args, **kwargs): //cls - ссылка на текущий класс, args,kwargs обязательны
+              print('Вызван __new__')
+              Должен возвратиться адрес нового созданного объекта, иначе None
+              return super().__new__(cls) // super - object
+            def __init__(self, x):
+              self.x=x
+        </code></pre>
+    Нужен например для паттерна Singleton:
+    <pre><code>
+        class DataBase:
+          __instance = None
+            def __new__(cls, *args, **kwargs):
+              if cls.__instance is None:
+                  return super().__new__(cls) //Возвращаем адрес нового созданного объекта
+              return cls.__instance //Иначе ссылку на существующий объект
+          __del__(self): //Финализатор, если удалится объект
+            DataBase.__instance = None
+        Теперь у двух экземпляров класса DataBase будет одинаковый id
+        </code></pre>
+
+        <b>__getitem__()</b>
+        - получение значения по ключу item
+        <pre><code>
+        def __getitem__(self, item):
+          if 0 <= item < len(self.marks): //любая логика обработки индекса item
+            return self.marks[item]
+          else:
+            raise IndexError("Неверный индекс")
+        Теперь экземпляру класса доступна запись a[int]
+        </code></pre>
+        <b>__setitem__()</b>
+        - поддержка операции присвоения
+          <pre><code>
+        def __setitem__(self, key, value):
+              //тут логика обработки ключа и значеня
+          self.marks[key] = value
+        Теперь экземпляру класса доступна запись a[int]
+        </code></pre>
+        <b>__delitem__()</b>
+        для удаления элемента из списка.
+        <pre><code>
+        def __delitem__(self, key):
+          if not isinstance(key, int): //например такая проверка ключа
+            raise TypeError("Индекс должен быть целым числом")
+          del self.marks[key]
+        Теперь доступна удаление, например del a[3]
+        </code></pre>
+
+    </div>
 </div>
 
 <script>
